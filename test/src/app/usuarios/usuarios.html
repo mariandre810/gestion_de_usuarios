@@ -1,0 +1,78 @@
+<div class="p-8">
+  <!-- Encabezado con título y botones de acción -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Lista de Usuarios</h1>
+    
+    <div class="flex gap-3">
+      <button 
+        (click)="crearUsuario()" 
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold shadow transition-colors"
+      >
+        + Crear Usuario
+      </button>
+
+      <button 
+        (click)="logout()" 
+        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded font-semibold transition-colors"
+      >
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+
+  <!-- Rejilla de tarjetas (Muestra los 4 campos) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div 
+      *ngFor="let u of usuariosPaginados" 
+      class="bg-white p-4 border rounded-lg shadow-sm flex flex-col gap-1 hover:shadow-md transition-shadow"
+    >
+      <!-- ID y Nombre en la cabecera de la tarjeta -->
+      <div class="flex justify-between items-start">
+        <p class="font-bold text-lg text-gray-900">
+          {{ u.nombre ? u.nombre : u.username }}
+        </p>
+        <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">
+          ID: {{ u.id }}
+        </span>
+      </div>
+
+      <!-- Username -->
+      <p class="text-gray-600">@{{ u.username }}</p>
+
+      <!-- Correo -->
+      <p class="text-gray-500 text-sm">
+        {{ u.correo ? u.correo : 'Sin correo registrado' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Mensaje si la lista está vacía -->
+  <div *ngIf="usuarios.length === 0" class="text-center py-8 text-gray-500">
+    No hay usuarios disponibles.
+  </div>
+
+  <!-- Controles de Paginación -->
+  <div *ngIf="usuarios.length > 0" class="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4 border-t pt-4">
+    <span class="text-sm text-gray-600">
+      Página <strong>{{ paginaActual }}</strong> de <strong>{{ totalPaginas }}</strong> 
+    </span>
+
+    <div class="flex space-x-2">
+      <button 
+        (click)="cambiarPagina(paginaActual - 1)" 
+        [disabled]="paginaActual === 1"
+        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        Anterior
+      </button>
+
+      <button 
+        (click)="cambiarPagina(paginaActual + 1)" 
+        [disabled]="paginaActual === totalPaginas"
+        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>

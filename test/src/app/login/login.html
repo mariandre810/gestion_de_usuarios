@@ -1,0 +1,31 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+  <h1 class="text-2xl font-bold mb-4">Iniciar Sesión</h1>
+
+  <div class="bg-gray-200 p-6 rounded-lg shadow-md w-80 flex flex-col gap-4">
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-semibold text-gray-700">UserName:</label>
+      <input 
+        type="text" 
+        [(ngModel)]="username" 
+        placeholder="Ingresa tu usuario..." 
+        class="p-2 border rounded border-gray-400 bg-white"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-semibold text-gray-700">Password:</label>
+      <input 
+        type="password" 
+        [(ngModel)]="password" 
+        class="p-2 border rounded border-gray-400 bg-white"
+      />
+    </div>
+
+    <button 
+      (click)="onLogin()" 
+      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded mt-2"
+    >
+      Ingresar
+    </button>
+  </div>
+</div>
