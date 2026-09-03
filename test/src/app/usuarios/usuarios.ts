@@ -32,6 +32,7 @@ export class UsuariosComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.usuarios = data || [];
+          
           // Fuerza el renderizado visual en la vista
           this.cdr.detectChanges();
         },
