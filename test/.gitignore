@@ -11,6 +11,10 @@
 npm-debug.log
 yarn-error.log
 
+# Variables de entorno y certificados sensibles
+.env
+ca.pem
+
 # IDEs and editors
 .idea/
 .project

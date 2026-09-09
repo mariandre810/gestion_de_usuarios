@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
  
 @Component({
   selector: 'app-nuevo-usuario',
@@ -30,7 +31,7 @@ export class NuevoUsuarioComponent {
     this.mensajeError = '';
     this.mensajeExito = '';
  
-    this.http.post<any>('http://localhost:3000/api/usuarios', this.nuevoUsuario).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/api/usuarios`, this.nuevoUsuario).subscribe({
       next: (respuesta) => {
         this.mensajeExito = respuesta.message || 'Usuario creado exitosamente.';
         this.nuevoUsuario = { username: '', password: '' };

@@ -1,3 +1,6 @@
+import dns from 'node:dns';
+dns.setDefaultResultOrder('ipv4first');
+
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -36,7 +39,7 @@ app.use(express.json());
  */
 app.get('/api/usuarios', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT id, username FROM usuarios');
+    const [rows] = await pool.query('SELECT * FROM usuarios ORDER BY id ASC');
     if (rows.length === 0) {
       return res.status(404).json({ message: "No Data Found" });
     }
@@ -66,14 +69,17 @@ app.get('/api/usuarios', async (req, res) => {
  *       404:
  *         description: No encontrado
  */
-// 1. Obtener todos los usuarios
-app.get('/api/usuarios', async (req, res) => {
+app.get('/api/usuarios/:username', async (req, res) => {
+  const { username } = req.params;
+
   try {
-    const [rows] = await pool.query('SELECT * FROM usuarios');
+    const [rows] = await pool.query('SELECT * FROM usuarios WHERE username = ?', [username.trim()]);
+
     if (rows.length === 0) {
-      return res.status(404).json({ message: "No Data Found" });
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
-    res.json(rows);
+
+    res.json(rows[0]);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

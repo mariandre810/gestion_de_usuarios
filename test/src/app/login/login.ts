@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ export class LoginComponent {
       password: this.password 
     };
 
-    this.http.post<any>('http://localhost:3000/api/login', body)
+    this.http.post<any>(`${environment.apiUrl}/api/login`, body)
       .subscribe({
         next: (res) => {
           console.log('Login exitoso:', res);

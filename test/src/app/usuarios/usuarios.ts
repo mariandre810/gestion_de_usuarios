@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-usuarios',
@@ -28,7 +29,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios(): void {
-    this.http.get<any[]>('http://localhost:3000/api/usuarios')
+    this.http.get<any[]>(`${environment.apiUrl}/api/usuarios`)
       .subscribe({
         next: (data) => {
           this.usuarios = data || [];
