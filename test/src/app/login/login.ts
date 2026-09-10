@@ -31,7 +31,7 @@ export class LoginComponent {
       password: this.password 
     };
 
-    this.http.post<any>('https://gestion-de-usuarios-cpt6.onrender.com/api/login', body)
+    this.http.post<any>(`${environment.apiUrl}/api/login`, body)
       .subscribe({
         next: (res) => {
           console.log('Login exitoso:', res);

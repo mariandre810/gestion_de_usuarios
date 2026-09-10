@@ -3,5 +3,5 @@
 // =====================================================================
 export const environment = {
   production: true,
-  apiUrl: 'https://TU-URL-DEL-BACKEND-DESPLEGADO.com',
+  apiUrl: 'https://gestion-de-usuarios-cpt6.onrender.com',
 };
