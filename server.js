@@ -15,8 +15,26 @@ const PORT = process.env.PORT || 3000;
 const SECRET_KEY = process.env.JWT_SECRET || 'clave_secreta_fallback';
 
 // Configuración de CORS permitiendo peticiones desde Angular
+// Configuración de CORS flexible para desarrollo y producción
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: (origin, callback) => {
+    // Permite peticiones sin origen (como Postman o Swagger) o desde localhost
+    if (!origin || origin.startsWith('http://localhost:')) {
+      return callback(null, true);
+    }
+    
+    // Lista de dominios de producción permitidos
+    const allowedDomains = [
+      'https://gestion-de-usuarios.onrender.com',
+      // Agrega aquí la URL de tu frontend cuando lo despliegues (ej. 'https://tu-app.vercel.app')
+    ];
+
+    if (allowedDomains.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Bloqueado por CORS'));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

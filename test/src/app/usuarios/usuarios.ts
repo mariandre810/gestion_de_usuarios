@@ -29,7 +29,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios(): void {
-    this.http.get<any[]>(`${environment.apiUrl}/api/usuarios`)
+    this.http.get<any[]>('https://gestion-de-usuarios-cpt6.onrender.com/api/usuarios')
       .subscribe({
         next: (data) => {
           this.usuarios = data || [];

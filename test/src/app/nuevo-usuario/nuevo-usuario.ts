@@ -31,7 +31,7 @@ export class NuevoUsuarioComponent {
     this.mensajeError = '';
     this.mensajeExito = '';
  
-    this.http.post<any>(`${environment.apiUrl}/api/usuarios`, this.nuevoUsuario).subscribe({
+    this.http.post<any>('https://gestion-de-usuarios-cpt6.onrender.com/api/usuarios', this.nuevoUsuario).subscribe({
       next: (respuesta) => {
         this.mensajeExito = respuesta.message || 'Usuario creado exitosamente.';
         this.nuevoUsuario = { username: '', password: '' };
