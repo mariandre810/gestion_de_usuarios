@@ -1,5 +1,5 @@
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const options = {
   definition: {
@@ -11,8 +11,13 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Cambia el puerto si utilizas otro distinto
+        url: 'https://gestion-de-usuarios-cpt6.onrender.com',
+        description: 'Servidor de Producción (Render)'
       },
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor Local (Desarrollo)'
+      }
     ],
   },
   apis: ['./server.js'], // Archivo donde están definidas tus rutas
@@ -20,7 +25,9 @@ const options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
-export const swaggerDocs = (app, port) => {
+const swaggerDocs = (app, port) => {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   console.log(`Documentación disponible en http://localhost:${port}/api-docs`);
 };
+
+module.exports = { swaggerDocs };
