@@ -16,27 +16,22 @@ const SECRET_KEY = process.env.JWT_SECRET || 'clave_secreta_fallback';
 
 // Configuración de CORS permitiendo peticiones desde Angular
 // Configuración de CORS flexible para desarrollo y producción
+const allowedDomains = [
+  'https://gestion-de-usuarios.onrender.com',
+  'https://venerable-horse-cf8bf6.netlify.app' // Sin el /login al final
+];
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Permite peticiones sin origen (como Postman o Swagger) o desde localhost
-    if (!origin || origin.startsWith('http://localhost:')) {
+    // Permite peticiones sin origen (Postman/Swagger) o desde localhost o dominios permitidos
+    if (!origin || origin.startsWith('http://localhost:') || allowedDomains.includes(origin)) {
       return callback(null, true);
     }
-    
-    // Lista de dominios de producción permitidos
-    const allowedDomains = [
-      'https://gestion-de-usuarios.onrender.com',
-      // Agrega aquí la URL de tu frontend cuando lo despliegues (ej. 'https://tu-app.vercel.app')
-    ];
-
-    if (allowedDomains.includes(origin)) {
-      return callback(null, true);
-    }
-
-    return callback(new Error('Bloqueado por CORS'));
+    return callback(null, false); // Retorna false para denegar limpiamente
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Se incluye OPTIONS
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
