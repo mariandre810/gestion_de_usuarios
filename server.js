@@ -14,22 +14,28 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY = process.env.JWT_SECRET || 'clave_secreta_fallback';
 
-// Configuración de CORS permitiendo peticiones desde Angular
-// Configuración de CORS flexible para desarrollo y producción
+// Configuración de CORS permitiendo Render, Netlify y solicitudes locales
 const allowedDomains = [
+  'https://gestion-de-usuarios-cpt6.onrender.com',
   'https://gestion-de-usuarios.onrender.com',
-  'https://venerable-horse-cf8bf6.netlify.app' // Sin el /login al final
+  'https://venerable-horse-cf8bf6.netlify.app'
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Permite peticiones sin origen (Postman/Swagger) o desde localhost o dominios permitidos
-    if (!origin || origin.startsWith('http://localhost:') || allowedDomains.includes(origin)) {
+    // Permite peticiones sin origen (Postman/Swagger UI), localhost, Render o Netlify
+    if (
+      !origin || 
+      origin.startsWith('http://localhost:') || 
+      origin.endsWith('.onrender.com') || 
+      origin.endsWith('.netlify.app') || 
+      allowedDomains.includes(origin)
+    ) {
       return callback(null, true);
     }
-    return callback(null, false); // Retorna false para denegar limpiamente
+    return callback(null, false);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Se incluye OPTIONS
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
